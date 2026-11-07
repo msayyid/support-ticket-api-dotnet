@@ -1,0 +1,314 @@
+### Valid ticket
+POST http://localhost:5194/tickets
+Content-Type: application/json
+
+{
+  "id": 5,
+  "title": "Cannot reset password",
+  "category": "Account",
+  "isClosed": false
+}
+
+
+### Invalid - empty title
+POST http://localhost:5194/tickets
+Content-Type: application/json
+
+{
+  "id": 6,
+  "title": "",
+  "category": "Technical",
+  "isClosed": false
+}
+
+
+### Invalid - empty category
+POST http://localhost:5194/tickets
+Content-Type: application/json
+
+{
+  "id": 7,
+  "title": "Something happened",
+  "category": "",
+  "isClosed": false
+}
+
+
+### Invalid - unsupported category
+POST http://localhost:5194/tickets
+Content-Type: application/json
+
+{
+  "id": 8,
+  "title": "Delivery issue",
+  "category": "Shipping",
+  "isClosed": false
+}
+
+
+### Verify ticket 5 was created
+GET http://localhost:5194/tickets/5
+
+
+
+
+
+
+
+###
+###
+###
+
+
+### Valid PUT
+PUT http://localhost:5194/tickets/2
+Content-Type: application/json
+
+{
+  "id": 999,
+  "title": "Updated billing issue",
+  "category": "Billing",
+  "isClosed": true
+}
+
+### Verify route id wins
+GET http://localhost:5194/tickets/2
+
+### Missing ticket
+PUT http://localhost:5194/tickets/999
+Content-Type: application/json
+
+{
+  "id": 999,
+  "title": "Missing",
+  "category": "Other",
+  "isClosed": false
+}
+
+### Invalid category
+PUT http://localhost:5194/tickets/2
+Content-Type: application/json
+
+{
+  "id": 2,
+  "title": "Bad category",
+  "category": "Shipping",
+  "isClosed": false
+}
+
+### Empty title
+PUT http://localhost:5194/tickets/2
+Content-Type: application/json
+
+{
+  "id": 2,
+  "title": "",
+  "category": "Billing",
+  "isClosed": false
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+### Close existing ticket
+PATCH http://localhost:5194/tickets/1
+Content-Type: application/json
+
+{
+  "isClosed": true
+}
+
+### Verify
+GET http://localhost:5194/tickets/1
+
+### Reopen it
+PATCH http://localhost:5194/tickets/1
+Content-Type: application/json
+
+{
+  "isClosed": false
+}
+
+### Missing ticket
+PATCH http://localhost:5194/tickets/999
+Content-Type: application/json
+
+{
+  "isClosed": true
+}
+
+
+
+
+
+
+
+
+
+### Delete existing ticket
+DELETE http://localhost:5194/tickets/4
+
+### Delete same ticket again
+DELETE http://localhost:5194/tickets/4
+
+### Check remaining tickets
+GET http://localhost:5194/tickets
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+### 1. GET all tickets
+GET http://localhost:5194/tickets
+
+
+### 2. GET existing ticket
+GET http://localhost:5194/tickets/1
+
+
+### 3. GET missing ticket
+GET http://localhost:5194/tickets/999
+
+
+### 4. Filter by category
+GET http://localhost:5194/tickets?category=Technical
+
+
+### 5. Filter by status
+GET http://localhost:5194/tickets?isClosed=false
+
+
+### 6. Combined filters
+GET http://localhost:5194/tickets?category=Billing&isClosed=false
+
+
+### 7. POST valid ticket
+POST http://localhost:5194/tickets
+Content-Type: application/json
+
+{
+  "id": 5,
+  "title": "Password reset not working",
+  "category": "Account",
+  "isClosed": false
+}
+
+
+### 8. POST invalid - empty title
+POST http://localhost:5194/tickets
+Content-Type: application/json
+
+{
+  "id": 6,
+  "title": "",
+  "category": "Technical",
+  "isClosed": false
+}
+
+
+### 9. POST invalid - invalid category
+POST http://localhost:5194/tickets
+Content-Type: application/json
+
+{
+  "id": 7,
+  "title": "Delivery problem",
+  "category": "Shipping",
+  "isClosed": false
+}
+
+
+### 10. PUT existing ticket
+PUT http://localhost:5194/tickets/2
+Content-Type: application/json
+
+{
+  "id": 999,
+  "title": "Updated billing problem",
+  "category": "Billing",
+  "isClosed": true
+}
+
+
+### 11. Verify route ID wins
+GET http://localhost:5194/tickets/2
+
+
+### 12. PUT missing ticket
+PUT http://localhost:5194/tickets/999
+Content-Type: application/json
+
+{
+  "id": 999,
+  "title": "Missing ticket",
+  "category": "Other",
+  "isClosed": false
+}
+
+
+### 13. PUT invalid category
+PUT http://localhost:5194/tickets/2
+Content-Type: application/json
+
+{
+  "id": 2,
+  "title": "Invalid update",
+  "category": "Shipping",
+  "isClosed": false
+}
+
+
+### 14. PATCH existing ticket
+PATCH http://localhost:5194/tickets/1
+Content-Type: application/json
+
+{
+  "isClosed": true
+}
+
+
+### 15. Verify PATCH
+GET http://localhost:5194/tickets/1
+
+
+### 16. PATCH missing ticket
+PATCH http://localhost:5194/tickets/999
+Content-Type: application/json
+
+{
+  "isClosed": true
+}
+
+
+### 17. DELETE existing ticket
+DELETE http://localhost:5194/tickets/4
+
+
+### 18. DELETE same ticket again
+DELETE http://localhost:5194/tickets/4
+
+
+### 19. GET final ticket list
+GET http://localhost:5194/tickets
